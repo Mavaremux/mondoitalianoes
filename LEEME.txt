@@ -1,0 +1,51 @@
+MONDO ITALIANO — Versión optimizada para El Salvador
+
+Abre index.html manteniendo todos los archivos y la carpeta assets en su lugar.
+
+Cambios principales:
+- Título animado que alterna entre «pizzería» y «restaurante» cada 2,5 segundos.
+- Retirado el texto secundario solicitado debajo del horno.
+- Animaciones activadas automáticamente al abrir la web, incluso si Windows solicita movimiento reducido.
+- La persona que visita puede pausar y reanudar los efectos con el botón «Animaciones».
+- Efecto de inclinación automático del horno, además de movimiento manual, menú móvil y entradas al desplazarse.
+- Metadatos SEO en español de El Salvador, esquema Organization y sección de preguntas frecuentes.
+- Mantiene catálogo, selección de productos, WhatsApp y la imagen interactiva del horno.
+
+PENDIENTES PARA PUBLICACIÓN:
+1. Confirmar el dominio definitivo antes de configurar canonical, og:url, og:image y sitemap.xml con URL completas.
+2. Confirmar la dirección física y el horario de atención, si existen, antes de integrar datos LocalBusiness y optimizar Google Business Profile.
+3. Registrar el dominio verificado en Google Search Console y enviar un sitemap del sitio publicado.
+4. El horno se presenta mediante imagen con inclinación interactiva; no es un modelo 3D de 360 grados.
+
+No se inventaron direcciones, horarios ni reseñas.
+
+PARA VER LOS CAMBIOS: reemplaza todos los archivos publicados, incluyendo style.css y los .js. Refresca el navegador con Ctrl+F5 para evitar caché.
+
+---
+ACTUALIZACIÓN 28/10/2026 — BARRA FLOTANTE DE CONSULTA (solo catálogo)
+- Nueva barra inferior "Preparar consulta" que aparece al añadir el primer producto y solo mientras se explora el catálogo.
+- Muestra miniaturas de los últimos productos, contador y último producto añadido; abre el panel "Mi selección".
+- Animación de vuelo del producto hacia la barra (se desactiva con el botón «Animaciones» en pausa).
+- Botón + / ✓ de cada tarjeta ampliado a 44 px en móvil y con micro-animación al añadir.
+- El botón "Mi selección" del encabezado y el panel lateral se mantienen sin cambios.
+- Archivos tocados: index.html, app.js, style.css (versión ?v=20261028d). Refresca con Ctrl+F5.
+
+---
+ACTUALIZACIÓN 28/10/2026 (2) — LOGO LA CLÁSICA Y CONFIRMACIÓN POR WHATSAPP
+- Pie de página: alusión "Del mismo dueño de" con el logo de Pizzería La Clásica (assets/laclasicapie.png, con versión optimizada .webp), enlazado a pizzerialaclasica.com.
+- Panel "Mi selección": el botón principal ahora es "Confirmar pedido por WhatsApp" (+503 7735-7081). Envía cliente, productos con presentación, total y notas ya redactados.
+- Con la selección vacía el botón no abre WhatsApp y avisa que hay que añadir productos.
+- "Copiar consulta" queda como botón secundario. El botón de la barra flotante pasa a "Revisar pedido".
+- Archivos tocados: index.html, app.js, style.css, assets/laclasicapie.webp (nuevo). Versión ?v=20261028e. Refresca con Ctrl+F5.
+
+---
+ACTUALIZACIÓN 28/10/2026 (3) — SECCIÓN DE HORNOS VALORIANI Y "MÁS PEDIDOS"
+- Descripción nueva del horno y cifras animadas (+100 años, hasta 450 °C, 100 % Italia, 1 proveedor).
+- Comparador interactivo: Valoriani a gas frente a horno de leña, eléctrico de platos y de cinta.
+- Calculadora de tamaño: pizzas por hora en hora pico + tipo de gas -> tamaño de referencia y botón de WhatsApp con los datos ya escritos.
+- Bloque "Por qué con Mondo Italiano" y 3 preguntas nuevas en el FAQ (con datos estructurados FAQPage para SEO).
+- Filtro "Más pedidos" en el catálogo.
+- Archivo nuevo: hornos.js. Datos editables al inicio de hornos.js (MODELS, CYCLES_PER_HOUR, SHOW_LA_CLASICA_PROOF) y TOP_PICKS en app.js.
+- PENDIENTE DE CONFIRMAR CON LA DISTRIBUIDORA: modelos Valoriani disponibles, lista real de más pedidos y si La Clásica hornea con Valoriani (cambiar SHOW_LA_CLASICA_PROOF a true).
+- Versión ?v=20261028f. Refresca con Ctrl+F5.
+
