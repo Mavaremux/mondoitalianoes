@@ -1,51 +1,27 @@
-MONDO ITALIANO — Versión optimizada para El Salvador
+MONDO ITALIANO — REVISIÓN DEL CLIENTE / 03 NOV 2026
 
-Abre index.html manteniendo todos los archivos y la carpeta assets en su lugar.
+INSTRUCCIONES
+Extrae el ZIP completo. Abre index.html para ver la web. Para publicar, sube todos los archivos manteniendo la carpeta assets y los ficheros HTML, CSS y JavaScript en la misma estructura.
 
-Cambios principales:
-- Título animado que alterna entre «pizzería» y «restaurante» cada 2,5 segundos.
-- Retirado el texto secundario solicitado debajo del horno.
-- Animaciones activadas automáticamente al abrir la web, incluso si Windows solicita movimiento reducido.
-- La persona que visita puede pausar y reanudar los efectos con el botón «Animaciones».
-- Efecto de inclinación automático del horno, además de movimiento manual, menú móvil y entradas al desplazarse.
-- Metadatos SEO en español de El Salvador, esquema Organization y sección de preguntas frecuentes.
-- Mantiene catálogo, selección de productos, WhatsApp y la imagen interactiva del horno.
+CAMBIOS INCORPORADOS
+- Portada organizada por marcas: Le 5 Stagioni, Latteria Sorrentina, Rodolfi, Solania, Dante, Valoriani, Gi Metal y Cajas fermentadoras.
+- Americo Coppini sustituido en el mosaico de marcas por Cajas fermentadoras, con fotografía y medidas 60 × 40 cm y 30 × 40 cm.
+- Descripciones completas al pulsar cada producto y reseñas de marcas al pulsar sus tarjetas.
+- Acceso directo al sitio oficial https://valoriani.it/ desde la tarjeta de Valoriani y desde la ficha de horno.
+- Categorías: Harinas, Lácteos, Salsas, Tomates, Aceites, Accesorios, Hornos y Cajas fermentadoras.
+- Catálogo ampliado a 28 fichas, con nuevas fotografías de producto del catálogo y material facilitado.
+- Corregida la asignación de fotografías/descripciones de la salsa con albahaca y la pulpa fina de tomate.
+- Texto «Quiénes somos» y lema «Una porción de Italia en El Salvador».
+- Teléfono WhatsApp +503 7735-7081 y correo pizzerialaclasica@gmail.com, de acuerdo con el material de revisión.
+- Actualizado el PDF del catálogo, reemplazando el anterior que contenía elementos de La Clásica.
+- Se preservan el horno animado, el título que alterna pizzería/restaurante, la lista de selección, la consulta por WhatsApp y las animaciones.
+- Los productos no muestran precios ni stock no comprobados. Las medidas, descripciones y presentaciones corresponden a las indicaciones recibidas.
 
-PENDIENTES PARA PUBLICACIÓN:
-1. Confirmar el dominio definitivo antes de configurar canonical, og:url, og:image y sitemap.xml con URL completas.
-2. Confirmar la dirección física y el horario de atención, si existen, antes de integrar datos LocalBusiness y optimizar Google Business Profile.
-3. Registrar el dominio verificado en Google Search Console y enviar un sitemap del sitio publicado.
-4. El horno se presenta mediante imagen con inclinación interactiva; no es un modelo 3D de 360 grados.
+NOTA SOBRE MATERIAL VISUAL
+Algunas imágenes aportadas dentro de capturas de WhatsApp tienen una resolución limitada. La fotografía de Mora y la de Provola Affumicata se extrajeron de dichas capturas por no figurar como recursos independientes en el catálogo original.
 
-No se inventaron direcciones, horarios ni reseñas.
-
-PARA VER LOS CAMBIOS: reemplaza todos los archivos publicados, incluyendo style.css y los .js. Refresca el navegador con Ctrl+F5 para evitar caché.
-
----
-ACTUALIZACIÓN 28/10/2026 — BARRA FLOTANTE DE CONSULTA (solo catálogo)
-- Nueva barra inferior "Preparar consulta" que aparece al añadir el primer producto y solo mientras se explora el catálogo.
-- Muestra miniaturas de los últimos productos, contador y último producto añadido; abre el panel "Mi selección".
-- Animación de vuelo del producto hacia la barra (se desactiva con el botón «Animaciones» en pausa).
-- Botón + / ✓ de cada tarjeta ampliado a 44 px en móvil y con micro-animación al añadir.
-- El botón "Mi selección" del encabezado y el panel lateral se mantienen sin cambios.
-- Archivos tocados: index.html, app.js, style.css (versión ?v=20261028d). Refresca con Ctrl+F5.
-
----
-ACTUALIZACIÓN 28/10/2026 (2) — LOGO LA CLÁSICA Y CONFIRMACIÓN POR WHATSAPP
-- Pie de página: alusión "Del mismo dueño de" con el logo de Pizzería La Clásica (assets/laclasicapie.png, con versión optimizada .webp), enlazado a pizzerialaclasica.com.
-- Panel "Mi selección": el botón principal ahora es "Confirmar pedido por WhatsApp" (+503 7735-7081). Envía cliente, productos con presentación, total y notas ya redactados.
-- Con la selección vacía el botón no abre WhatsApp y avisa que hay que añadir productos.
-- "Copiar consulta" queda como botón secundario. El botón de la barra flotante pasa a "Revisar pedido".
-- Archivos tocados: index.html, app.js, style.css, assets/laclasicapie.webp (nuevo). Versión ?v=20261028e. Refresca con Ctrl+F5.
-
----
-ACTUALIZACIÓN 28/10/2026 (3) — SECCIÓN DE HORNOS VALORIANI Y "MÁS PEDIDOS"
-- Descripción nueva del horno y cifras animadas (+100 años, hasta 450 °C, 100 % Italia, 1 proveedor).
-- Comparador interactivo: Valoriani a gas frente a horno de leña, eléctrico de platos y de cinta.
-- Calculadora de tamaño: pizzas por hora en hora pico + tipo de gas -> tamaño de referencia y botón de WhatsApp con los datos ya escritos.
-- Bloque "Por qué con Mondo Italiano" y 3 preguntas nuevas en el FAQ (con datos estructurados FAQPage para SEO).
-- Filtro "Más pedidos" en el catálogo.
-- Archivo nuevo: hornos.js. Datos editables al inicio de hornos.js (MODELS, CYCLES_PER_HOUR, SHOW_LA_CLASICA_PROOF) y TOP_PICKS en app.js.
-- PENDIENTE DE CONFIRMAR CON LA DISTRIBUIDORA: modelos Valoriani disponibles, lista real de más pedidos y si La Clásica hornea con Valoriani (cambiar SHOW_LA_CLASICA_PROOF a true).
-- Versión ?v=20261028f. Refresca con Ctrl+F5.
-
+PUBLICACIÓN Y SEO
+- Sustituye todos los archivos publicados y recarga el navegador sin caché (Ctrl+F5).
+- Añade dominio y dirección reales una vez confirmados para canonical, sitemap y marcado LocalBusiness. No se inventó esta información.
+- El sitio es estático: la selección se guarda en el navegador y la consulta se envía por WhatsApp. No procesa pagos ni confirma pedidos.
+- Antes de publicar, confirma con el negocio los textos comerciales y el correo proporcionados en las capturas.

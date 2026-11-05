@@ -1,55 +1,130 @@
-const products=[
-['Harina Napoletana Rossa','Le 5 Stagioni','Harinas','25 kg · 12 % proteína','074'],
-['Harina Oro','Le 5 Stagioni','Harinas','25 kg · 14 % proteína','076'],
-['Harina Superior','Le 5 Stagioni','Harinas','25 kg · 13 % proteína','078'],
-['Harina Integral Mora','Le 5 Stagioni','Harinas','10 kg','091'],
-['Salsa con albahaca','Rodolfi','Tomates y salsas','2,5 kg · Caja de 6 latas','018'],
-['Pulpa fina de tomate','Rodolfi','Tomates y salsas','2,5 kg · Caja de 6 latas','017'],
-['Tomate San Marzano D.O.P.','Solania','Tomates y salsas','2,5 kg · Caja de 6 unidades','037'],
-['Burrata','Latteria Sorrentina','Lácteos','125 g · Caja de 12 unidades','047'],
-['Fiordilatte','Latteria Sorrentina','Lácteos','Block de 1 kg','059'],
-['Stracciatella','Latteria Sorrentina','Lácteos','Consultar presentación','064'],
-['Aceite de oliva extra virgen','Dante','Aceites','5 litros','110'],
-['Aceite con peperoncino','Dante','Aceites','250 ml','117'],
-['Aceite con trufa blanca','Dante','Aceites','250 ml','119'],
-['Reducción balsámica de Módena','Dante','Aceites','250 ml','120'],
-['Hornos de gas','Valoriani','Equipamiento','Consultar modelos y especificaciones','154'],
-['Cajas fermentadoras','Gi Metal','Equipamiento','Consultar medidas disponibles','144']
-];/* Productos de la pestaña «Más pedidos» (índices de la lista de arriba). Confirmar con la distribuidora. */
-const TOP_PICKS=[0,5,6,7,8,10];
-let filter='Todos',selection=[];try{selection=JSON.parse(localStorage.getItem('mondo-selection')||'[]').filter(x=>Number.isInteger(x)&&products[x])}catch{}const grid=document.querySelector('#grid'),drawer=document.querySelector('#drawer');function render(){const q=document.querySelector('#search').value.toLocaleLowerCase();const list=products.map((p,i)=>({p,i})).filter(({p,i})=>(filter==='Todos'||(filter==='Más pedidos'?TOP_PICKS.includes(i):p[2]===filter))&&p.join(' ').toLocaleLowerCase().includes(q));grid.innerHTML=list.map(({p,i},k)=>`<article class="product-card" style="animation-delay:${Math.min(k,7)*.045}s"><div class="product-image"><img src="assets/${p[4]}.webp" alt="${p[0]} ${p[1]}" loading="lazy"><button data-add="${i}" class="${selection.includes(i)?'added':''}" aria-label="${selection.includes(i)?'Quitar':'Añadir'} ${p[0]}" aria-pressed="${selection.includes(i)}">${selection.includes(i)?'✓':'+'}</button></div><small>${p[1].toUpperCase()}</small><h3>${p[0]}</h3><p>${p[3]}</p></article>`).join('')||'<p>No hay productos que coincidan. Prueba otra búsqueda.</p>';document.querySelector('#count').textContent=selection.length}function save(){try{localStorage.setItem('mondo-selection',JSON.stringify(selection))}catch{}render();renderSelected();renderDock()}function renderSelected(){document.querySelector('#selected').innerHTML=selection.length?selection.map(i=>`<div class="selected-row"><span>${products[i][0]}<br><small>${products[i][1]}</small></span><button data-remove="${i}" aria-label="Quitar ${products[i][0]}">×</button></div>`).join(''):'<p>Aún no has añadido productos. Puedes seleccionarlos con el botón + del catálogo.</p>'}document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',x===b)});render()}));document.querySelector('#search').addEventListener('input',render);grid.addEventListener('click',e=>{const b=e.target.closest('[data-add]');if(!b)return;const i=Number(b.dataset.add),adding=!selection.includes(i),img=b.parentElement.querySelector('img'),rect=img.getBoundingClientRect();selection=adding?[...selection,i]:selection.filter(x=>x!==i);if(adding)lastAdded=i;save();if(adding)celebrateAdd(i,img,rect)});document.querySelectorAll('.bag').forEach(b=>b.addEventListener('click',()=>{renderSelected();drawer.showModal()}));document.querySelector('#close').onclick=()=>drawer.close();drawer.addEventListener('click',e=>{if(e.target===drawer&&e.clientX<drawer.getBoundingClientRect().left)drawer.close();const b=e.target.closest('[data-remove]');if(b){selection=selection.filter(i=>i!==Number(b.dataset.remove));save()}});document.querySelector('#copy').onclick=async()=>{const t=['Consulta — Mondo Italiano',document.querySelector('#customer').value,...selection.map(i=>`• ${products[i][0]} — ${products[i][1]} (${products[i][3]})`),document.querySelector('#notes').value].filter(Boolean).join('\n');try{await navigator.clipboard.writeText(t);document.querySelector('#copy-status').textContent='Consulta copiada. Puedes pegarla en tu canal de contacto habitual.'}catch{document.querySelector('#copy-status').textContent='No se pudo copiar automáticamente. Selecciona y copia el texto que aparece abajo.';let a=document.createElement('textarea');a.value=t;document.querySelector('#copy-status').appendChild(a);a.select()}};const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.essence-grid,.process,.catalog-head,.craft-copy,.brands h2,.brand-grid,.contact h2').forEach(e=>{e.classList.add('reveal');observer.observe(e)});let ticking=false;addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{document.querySelector('.progress').style.width=`${scrollY/(document.documentElement.scrollHeight-innerHeight)*100}%`;ticking=false});ticking=true}},{passive:true});render();
-
-document.querySelector('#whatsapp').addEventListener('click',function(e){
-const status=document.querySelector('#copy-status');
-if(!selection.length){e.preventDefault();status.textContent='Añade al menos un producto con el botón + del catálogo para confirmar tu pedido.';return}
-status.textContent='';
-const name=document.querySelector('#customer').value.trim(),notes=document.querySelector('#notes').value.trim(),n=selection.length;
-const text=['Hola, Mondo Italiano. Quiero confirmar este pedido:',name?`Cliente: ${name}`:null,'',...selection.map(i=>`• ${products[i][0]} — ${products[i][1]} (${products[i][3]})`),'',`Total: ${n} ${n===1?'producto':'productos'}`,notes?`Notas: ${notes}`:null,'Quedo atento a la disponibilidad, el precio y la entrega. ¡Gracias!'].filter(x=>x!==null).join('\n');
-this.href='https://wa.me/50377357081?text='+encodeURIComponent(text)});
-
-/* Barra flotante de consulta: visible solo mientras se explora el catálogo */
-let lastAdded=null,dockInView=false;
-const dock=document.querySelector('#cart-dock'),dockThumbs=document.querySelector('#dock-thumbs'),dockCount=document.querySelector('#dock-count'),dockNote=document.querySelector('#dock-note');
-function renderDock(){
-const n=selection.length,show=n>0&&dockInView;
-dockCount.textContent=`${n} ${n===1?'producto':'productos'}`;
-dockNote.textContent=lastAdded!==null&&selection.includes(lastAdded)?`Añadido: ${products[lastAdded][0]}`:'Listo para confirmar';
-dockThumbs.innerHTML=selection.slice(-3).map(i=>`<i><img src="assets/${products[i][4]}.webp" alt=""></i>`).join('')+(n>3?`<b>+${n-3}</b>`:'');
-dock.classList.toggle('is-visible',show);
-dock.toggleAttribute('inert',!show);
-document.body.classList.toggle('dock-on',show);document.querySelector('#whatsapp').setAttribute('aria-disabled',n?'false':'true')}
-function celebrateAdd(i,img,rect){
-if(document.body.classList.contains('motion-paused'))return;
-dockCount.classList.remove('pop');void dockCount.offsetWidth;dockCount.classList.add('pop');
-const nb=grid.querySelector(`[data-add="${i}"]`);if(nb)nb.classList.add('just-added');
-if(!dockInView||!img.animate)return;
-const f=img.cloneNode();f.removeAttribute('loading');f.alt='';f.className='fly-img';
-Object.assign(f.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});
-document.body.append(f);
-const tx=(innerWidth-dock.offsetWidth)/2+40-(rect.left+rect.width/2),ty=innerHeight-dock.offsetHeight/2-14-(rect.top+rect.height/2);
-const end=()=>{f.remove();dock.classList.remove('dock-bump');void dock.offsetWidth;dock.classList.add('dock-bump')};
-const run=f.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${tx*.5}px,${ty-70}px) scale(.55)`,opacity:.95,offset:.5},{transform:`translate(${tx}px,${ty}px) scale(.16)`,opacity:.25}],{duration:720,easing:'cubic-bezier(.45,.05,.2,1)'});
-run.onfinish=end;run.oncancel=()=>f.remove()}
-document.querySelector('#dock-open').addEventListener('click',()=>{renderSelected();drawer.showModal()});
-if('IntersectionObserver' in window){new IntersectionObserver(es=>{dockInView=es[0].isIntersecting;renderDock()},{rootMargin:'0px 0px -80px 0px'}).observe(document.querySelector('#productos'))}else{dockInView=true}
-renderDock();
+/* Catálogo Mondo Italiano — revisión del 3 de noviembre de 2026. */
+(()=>{
+'use strict';
+const products=Array.isArray(window.MONDO_PRODUCTS)?window.MONDO_PRODUCTS:[];
+const brands=Array.isArray(window.MONDO_BRANDS)?window.MONDO_BRANDS:[];
+const byId=new Map(products.map(p=>[p.id,p]));
+const grid=document.querySelector('#grid');
+const drawer=document.querySelector('#drawer');
+const pd=document.querySelector('#product-dialog');
+const bd=document.querySelector('#brand-dialog');
+const search=document.querySelector('#search');
+const filters=[...document.querySelectorAll('[data-filter]')];
+const STORAGE='mondo-selection-v2';
+let filter='Todos';let selection=[];let activeProduct=null;let activeBrand=null;
+try{selection=JSON.parse(localStorage.getItem(STORAGE)||'[]').filter(id=>byId.has(id))}catch{selection=[]}
+selection=[...new Set(selection)];
+const safe=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const path=p=>'assets/'+encodeURIComponent(p);
+const phone='50377357081';
+function getMatches(){
+ const q=search.value.trim().toLocaleLowerCase('es');
+ return products.filter(p=>(filter==='Todos'||p.category===filter)&&(!q||[p.name,p.brand,p.category,p.presentation,p.description].join(' ').toLocaleLowerCase('es').includes(q)));
+}
+function render(){
+ const entries=getMatches();
+ grid.innerHTML=entries.map((p,i)=>{
+  const picked=selection.includes(p.id);
+  return `<article class="product-card" style="animation-delay:${Math.min(i,7)*.04}s">
+  <div class="product-image">
+   <button class="image-open" type="button" data-details="${safe(p.id)}" aria-label="Ver descripción de ${safe(p.name)}"><img src="${path(p.image)}" alt="${safe(p.name)} de ${safe(p.brand)}" loading="lazy" decoding="async"></button>
+   <button type="button" data-add="${safe(p.id)}" class="${picked?'added':''}" aria-label="${picked?'Quitar':'Añadir'} ${safe(p.name)} ${picked?'de':'a'} mi selección" aria-pressed="${picked}">${picked?'✓':'+'}</button>
+  </div>
+  <small>${safe(p.brand.toUpperCase())}</small>
+  <h3>${safe(p.name)}</h3><p>${safe(p.presentation)}</p>
+  <button type="button" class="product-more" data-details="${safe(p.id)}">Ver descripción <span aria-hidden="true">↗</span></button>
+  </article>`
+ }).join('')||'<p class="no-results">No encontramos productos con esos filtros. Prueba con otra categoría o búsqueda.</p>';
+ document.querySelector('#count').textContent=selection.length;
+ document.querySelector('#count').setAttribute('aria-label',`${selection.length} productos seleccionados`);
+}
+function renderSelected(){
+ const selected=document.querySelector('#selected');
+ selected.innerHTML=selection.length?selection.map(id=>{
+  const p=byId.get(id);
+  return `<div class="selected-row"><span>${safe(p.name)}<br><small>${safe(p.brand)} · ${safe(p.presentation)}</small></span><button type="button" data-remove="${safe(id)}" aria-label="Quitar ${safe(p.name)}">×</button></div>`;
+ }).join(''):'<p>Aún no has añadido productos. Puedes seleccionarlos con el botón + de cada producto.</p>';
+}
+function save(){try{localStorage.setItem(STORAGE,JSON.stringify(selection))}catch{}render();renderSelected();if(activeProduct)updateProductAdd()}
+function toggle(id){if(!byId.has(id))return;selection=selection.includes(id)?selection.filter(x=>x!==id):[...selection,id];save()}
+function setFilter(name){
+ filter=name;filters.forEach(b=>{const match=b.dataset.filter===name;b.classList.toggle('active',match);b.setAttribute('aria-pressed',String(match))});
+ render();
+}
+filters.forEach(b=>b.addEventListener('click',()=>setFilter(b.dataset.filter)));
+search.addEventListener('input',render);
+function updateProductAdd(){
+ if(!activeProduct)return;
+ const button=document.querySelector('#product-dialog-add');
+ const picked=selection.includes(activeProduct.id);
+ button.innerHTML=picked?'Quitar de mi selección <span>✓</span>':'Añadir a mi selección <span>+</span>';
+ button.setAttribute('aria-pressed',String(picked));
+}
+function openProduct(id){
+ const p=byId.get(id);if(!p)return;activeProduct=p;
+ document.querySelector('#product-dialog-img').src=path(p.image);
+ document.querySelector('#product-dialog-img').alt=p.name;
+ document.querySelector('#product-dialog-brand').textContent=`${p.brand.toUpperCase()} / ${p.category.toUpperCase()}`;
+ document.querySelector('#product-dialog-title').textContent=p.name;
+ document.querySelector('#product-dialog-presentation').textContent=p.presentation;
+ document.querySelector('#product-dialog-description').textContent=p.description;
+ const official=document.querySelector('#product-official');official.hidden=p.id!=='horno';
+ updateProductAdd();pd.showModal();
+}
+function openBrand(id){
+ const b=brands.find(x=>x.id===id);if(!b)return;activeBrand=b;
+ document.querySelector('#brand-dialog-img').src=path(b.image);
+ document.querySelector('#brand-dialog-img').alt=b.name;
+ document.querySelector('#brand-dialog-title').textContent=b.name;
+ document.querySelector('#brand-dialog-category').textContent=b.subtitle.toUpperCase();
+ document.querySelector('#brand-dialog-description').textContent=b.description;
+ const ext=document.querySelector('#brand-external');ext.hidden=!b.url;
+ if(b.url)ext.href=b.url;
+ bd.showModal();
+}
+// El cliente puede abrir toda la descripción pulsando la fotografía o «Ver descripción».
+grid.addEventListener('click',e=>{
+ const plus=e.target.closest('[data-add]');if(plus){toggle(plus.dataset.add);return}
+ const more=e.target.closest('[data-details]');if(more)openProduct(more.dataset.details);
+});
+document.querySelectorAll('[data-open-brand]').forEach(button=>button.addEventListener('click',()=>openBrand(button.dataset.openBrand)));
+document.querySelector('#product-dialog-add').addEventListener('click',()=>{if(activeProduct)toggle(activeProduct.id)});
+document.querySelector('#brand-see-products').addEventListener('click',()=>{
+ if(!activeBrand)return;
+ bd.close();
+ search.value=activeBrand.id==='cajas'?'':activeBrand.name;
+ setFilter(activeBrand.id==='cajas'?'Cajas fermentadoras':'Todos');
+ document.querySelector('#productos').scrollIntoView({behavior:'smooth',block:'start'});
+});
+for(const dialog of [pd,bd]){
+ dialog.querySelector('[data-close-dialog]').addEventListener('click',()=>dialog.close());
+ dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+}
+// Shortcuts to relevant category.
+document.querySelectorAll('[data-go-cat]').forEach(a=>a.addEventListener('click',()=>{search.value='';setFilter(a.dataset.goCat)}));
+// Preserve the original selection > consult via WhatsApp workflow.
+document.querySelectorAll('.bag').forEach(b=>b.addEventListener('click',()=>{renderSelected();drawer.showModal()}));
+document.querySelector('#close').addEventListener('click',()=>drawer.close());
+drawer.addEventListener('click',e=>{
+ if(e.target===drawer)drawer.close();
+ const del=e.target.closest('[data-remove]');if(del)toggle(del.dataset.remove);
+});
+function consultText(){
+ return ['Hola, Mondo Italiano. Me gustaría consultar productos y disponibilidad en El Salvador.',
+ document.querySelector('#customer').value.trim(),
+ ...selection.map(id=>{const p=byId.get(id);return `• ${p.name} — ${p.brand} (${p.presentation})`}),
+ document.querySelector('#notes').value.trim()].filter(Boolean).join('\n');
+}
+document.querySelector('#copy').addEventListener('click',async()=>{
+ const text=consultText(),status=document.querySelector('#copy-status');
+ try{await navigator.clipboard.writeText(text);status.textContent='Consulta copiada. Puedes pegarla en WhatsApp o en tu correo.'}
+ catch{status.textContent='Copia manualmente la consulta:';const area=document.createElement('textarea');area.readOnly=true;area.value=text;area.rows=5;status.append(area);area.select()}
+});
+document.querySelector('#whatsapp').addEventListener('click',function(){this.href='https://wa.me/'+phone+'?text='+encodeURIComponent(consultText())});
+// Progressive animation: supports motion.js without making content inaccessible.
+if('IntersectionObserver' in window){
+ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.08});
+ document.querySelectorAll('.essence-grid,.process,.catalog-head,.craft-copy,.brands h2,.brand-grid,.contact h2').forEach(el=>{el.classList.add('reveal');observer.observe(el)});
+}
+render();renderSelected();
+})();
