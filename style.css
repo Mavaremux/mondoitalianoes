@@ -205,6 +205,11 @@
 .trust-strip{display:flex;gap:0;background:var(--ink);color:var(--cream);padding:18px 6%;font-size:11px;letter-spacing:1px;flex-wrap:wrap}
 .trust-item{flex:1 1 200px;display:flex;align-items:center;gap:10px;padding:6px 12px}
 .trust-item span{color:#c7b66e;font-size:16px}
+@media(max-width:639px){
+  .trust-strip{display:grid;grid-template-columns:1fr;gap:.75rem;height:auto;min-height:0;padding-block:clamp(1.25rem,5vw,1.75rem);padding-inline:6%;font-size:clamp(.9rem,3.8vw,1rem);letter-spacing:normal}
+  .trust-item{flex:initial;display:flex;align-items:flex-start;gap:.6rem;padding:0;line-height:1.4}
+  .trust-item span{font-size:16px;line-height:1.4;flex-shrink:0}
+}
 
 /* Sección Cómo pedir — reutiliza .ovens-layout y .oven-details con fondo oscuro */
 .como-pedir-section{background:#263b2c;color:#f5f2e9}
@@ -275,8 +280,6 @@
   .brand-landing h1{font-size:clamp(2rem,8vw,2.8rem)}
   .brand-cta-row{gap:10px}
   .brand-cta-row .button{padding:14px 18px;font-size:11px}
-  .trust-strip{flex-direction:column;padding:15px 6%}
-  .trust-item{padding:4px 0}
   .valoriani-compacto-inner{grid-template-columns:1fr;gap:30px}
   .valoriani-compacto-foto img{max-width:280px}
   .como-pedir-section .ovens-layout{grid-template-columns:1fr;gap:35px;margin-top:35px}
