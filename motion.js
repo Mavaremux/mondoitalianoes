@@ -1,18 +1,109 @@
-/* Motion layer: pointer depth, scroll choreography and accessible playback. */
+/* Motion layer — Mondo Italiano v20261104b
+   El botón "Animaciones" se reemplaza por @media(prefers-reduced-motion) en CSS.
+   Anima solo transform y opacity. IntersectionObserver con unobserve tras animar.
+   RAF único para listeners de scroll. will-change solo durante la animación.      */
 (()=>{
-document.body.classList.add('motion-enabled');
-const control=document.createElement('button');control.className='motion-control';control.type='button';control.setAttribute('aria-label','Pausar animaciones');control.setAttribute('aria-pressed','false');control.innerHTML='<span aria-hidden="true">Ⅱ</span> Animaciones';document.body.append(control);
-let paused=false,frame=0,lastY=scrollY,mouseX=0,mouseY=0;const art=document.querySelector('.hero-art');
-const apply=()=>{document.body.classList.toggle('motion-paused',paused);control.setAttribute('aria-pressed',String(paused));control.setAttribute('aria-label',paused?'Activar animaciones':'Pausar animaciones');control.innerHTML=`<span aria-hidden="true">${paused?'▷':'Ⅱ'}</span> Animaciones`;if(paused){art.style.transform='';document.querySelector('.craft-photo img').style.transform=''}};
-control.addEventListener('click',()=>{paused=!paused;apply()});apply();
-const leaves=document.createElement('div');leaves.className='floating-leaves';leaves.setAttribute('aria-hidden','true');leaves.innerHTML='<i></i><i></i><i></i><i></i><i></i>';art.append(leaves);
-const reveal=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('motion-in');reveal.unobserve(e.target)}}),{threshold:.06});
-function enroll(root){root.querySelectorAll('.product-card:not(.motion-ready),.brand-grid>div:not(.motion-ready),.process>div:not(.motion-ready)').forEach((el,i)=>{el.classList.add('motion-ready');el.style.setProperty('--delay',`${i%4*100}ms`);reveal.observe(el)})}enroll(document);new MutationObserver(()=>enroll(document.querySelector('#grid'))).observe(document.querySelector('#grid'),{childList:true});
-const headingObserver=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('heading-in');headingObserver.unobserve(e.target)}}),{threshold:.15});document.querySelectorAll('h2 em').forEach(el=>{el.classList.add('animated-em');headingObserver.observe(el)});
-const schedule=()=>{if(!frame)frame=requestAnimationFrame(update)};
-function update(){frame=0;if(paused)return;const y=scrollY;const hero=document.querySelector('.hero');if(y<hero.offsetHeight+150){art.style.transform=`perspective(1100px) rotateX(${-mouseY*3}deg) rotateY(${mouseX*5}deg) translate3d(${mouseX*12}px,${mouseY*10+y*.06}px,0)`}const img=document.querySelector('.craft-photo img');const rect=img.parentElement.getBoundingClientRect();if(rect.top<innerHeight&&rect.bottom>0){const offset=(innerHeight/2-(rect.top+rect.height/2))*.09;img.style.transform=`scale(1.16) translateY(${Math.max(-35,Math.min(35,offset))}px)`}document.querySelector('header').classList.toggle('scrolled',y>60);lastY=y}
-addEventListener('scroll',schedule,{passive:true});document.querySelector('.hero').addEventListener('pointermove',e=>{if(e.pointerType==='touch'||paused)return;const r=heroBounds();mouseX=(e.clientX-r.left)/r.width*2-1;mouseY=(e.clientY-r.top)/r.height*2-1;schedule()});function heroBounds(){return document.querySelector('.hero').getBoundingClientRect()}document.querySelector('.hero').addEventListener('pointerleave',()=>{mouseX=mouseY=0;schedule()});
-document.querySelector('#grid').addEventListener('pointermove',e=>{const card=e.target.closest('.product-image');if(!card||paused||e.pointerType==='touch')return;const r=card.getBoundingClientRect();card.style.transform=`perspective(700px) rotateX(${-(e.clientY-r.top-r.height/2)/30}deg) rotateY(${(e.clientX-r.left-r.width/2)/25}deg)`});document.querySelector('#grid').addEventListener('pointerout',e=>{const card=e.target.closest('.product-image');if(card&&!card.contains(e.relatedTarget))card.style.transform=''});
-document.querySelectorAll('.button').forEach(el=>{el.addEventListener('pointermove',e=>{if(paused||e.pointerType==='touch')return;const r=el.getBoundingClientRect();el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.08}px,${(e.clientY-r.top-r.height/2)*.13}px)`});el.addEventListener('pointerleave',()=>el.style.transform='')});
-document.querySelector('#grid').addEventListener('click',e=>{const b=e.target.closest('[data-add]');if(!b||paused)return;const badge=document.querySelector('#count');badge.classList.remove('count-pop');void badge.offsetWidth;badge.classList.add('count-pop')});schedule();
+  'use strict';
+
+  // Respeta la preferencia del sistema operativo
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Marcar body como motion-enabled (para el CSS de reveals)
+  document.body.classList.add('motion-enabled');
+
+  // Revelar tarjetas de producto, de marca y de proceso
+  const reveal = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('motion-in');
+      reveal.unobserve(e.target);
+    }
+  }), { threshold: 0.06 });
+
+  function enroll(root) {
+    root.querySelectorAll(
+      '.product-card:not(.motion-ready),.brand-grid>div:not(.motion-ready),.process>div:not(.motion-ready)'
+    ).forEach((el, i) => {
+      el.classList.add('motion-ready');
+      el.style.setProperty('--delay', `${i % 4 * 100}ms`);
+      reveal.observe(el);
+    });
+  }
+  enroll(document);
+  const grid = document.querySelector('#grid');
+  if (grid) {
+    new MutationObserver(() => enroll(grid)).observe(grid, { childList: true });
+  }
+
+  // Subrayado animado en títulos em (h1 y h2)
+  const headingObserver = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('heading-in'); headingObserver.unobserve(e.target); }
+  }), { threshold: 0.15 });
+  document.querySelectorAll('h2 em,h1 em').forEach(el => {
+    el.classList.add('animated-em');
+    headingObserver.observe(el);
+  });
+
+  // Paralaje sutil en la foto del craft (solo transform, sin layout reads dentro del RAF)
+  if (!prefersReduced) {
+    const craftImg = document.querySelector('.craft-photo img');
+    if (craftImg) {
+      let rafPending = false;
+      const updateCraft = () => {
+        rafPending = false;
+        const rect = craftImg.parentElement.getBoundingClientRect();
+        if (rect.top < innerHeight && rect.bottom > 0) {
+          const offset = (innerHeight / 2 - (rect.top + rect.height / 2)) * 0.09;
+          craftImg.style.transform = `scale(1.16) translateY(${Math.max(-35, Math.min(35, offset))}px)`;
+        }
+      };
+      window.addEventListener('scroll', () => {
+        if (!rafPending) { rafPending = true; requestAnimationFrame(updateCraft); }
+      }, { passive: true });
+    }
+  }
+
+  // Tilt 3D en tarjetas de producto (solo transform)
+  if (!prefersReduced && grid) {
+    grid.addEventListener('pointermove', e => {
+      const card = e.target.closest('.product-image');
+      if (!card || e.pointerType === 'touch') return;
+      const r = card.getBoundingClientRect();
+      card.style.transform = `perspective(700px) rotateX(${-(e.clientY - r.top - r.height / 2) / 30}deg) rotateY(${(e.clientX - r.left - r.width / 2) / 25}deg)`;
+    });
+    grid.addEventListener('pointerout', e => {
+      const card = e.target.closest('.product-image');
+      if (card && !card.contains(e.relatedTarget)) card.style.transform = '';
+    });
+  }
+
+  // Micro-movimiento en botones (solo transform)
+  if (!prefersReduced) {
+    document.querySelectorAll('.button').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        if (e.pointerType === 'touch') return;
+        const r = el.getBoundingClientRect();
+        el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.08}px,${(e.clientY - r.top - r.height / 2) * 0.13}px)`;
+      });
+      el.addEventListener('pointerleave', () => el.style.transform = '');
+    });
+  }
+
+  // Pop del contador de selección (en el click del grid)
+  if (grid) {
+    grid.addEventListener('click', e => {
+      const b = e.target.closest('[data-add]');
+      if (!b) return;
+      const badge = document.querySelector('#count');
+      if (!badge) return;
+      badge.classList.remove('count-pop');
+      void badge.offsetWidth;
+      badge.classList.add('count-pop');
+    });
+  }
+
+  // Header con sombra al hacer scroll
+  window.addEventListener('scroll', () => {
+    const h = document.querySelector('header');
+    if (h) h.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
 })();

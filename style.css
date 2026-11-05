@@ -128,7 +128,7 @@
 .brand-landing>.eyebrow{color:var(--red)}
 .brand-landing h2{font-size:clamp(49px,6.6vw,99px);line-height:1.02;letter-spacing:-2.9px;max-width:930px;margin-top:24px}
 .brand-landing .brand-intro{margin-top:20px;max-width:650px;color:#505b49;font-size:15px;line-height:1.75}
-.brand-landing .brand-grid{width:100%;margin-top:42px}
+.brand-landing .brand-grid{width:100%;margin-top:0}
 .brand-grid>.brand-card{min-height:185px;padding:0;display:block;position:relative;overflow:hidden}
 .brand-card-action{width:100%;min-height:185px;height:100%;padding:15px 12px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:transparent;border:0;color:var(--ink);text-align:center;transition:background .3s}
 .brand-card-action:hover,.brand-card-action:focus-visible{background:#e4e8d9}
@@ -188,3 +188,78 @@
 @media (max-width:700px){.brand-landing{padding:60px 6% 65px;min-height:0}.brand-landing h2{font-size:clamp(43px,10vw,65px);letter-spacing:-1.4px}.brand-landing .brand-intro{font-size:13px}.brand-landing .brand-grid{margin-top:30px;grid-template-columns:repeat(2,minmax(0,1fr))}.brand-grid>.brand-card{min-height:165px}.brand-card-action{min-height:165px;padding:13px 5px;gap:7px}.brand-card-action img,.brand-grid .brand-card img{width:104px;height:58px}.brand-card[data-brand="valoriani"] .brand-card-action img,.brand-card[data-brand="cajas"] .brand-card-action img{height:72px;width:105px}.brand-card-action strong{font-size:13px}.brand-card-action small{font-size:9px}.brand-direct{font-size:9px;top:4px;right:4px;padding:5px 6px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px}.product-card .product-image{height:200px}.product-card h3{font-size:17px}.product-card>p{font-size:11px}.product-more{font-size:10px}.catalog-tools{gap:12px}.catalog-tools>.filters{width:100%}.filters button{font-size:10px;padding:8px 11px}.search{width:100%;margin:0;justify-content:flex-start}.search input{flex:1;width:auto}.info-dialog{padding:22px;max-height:90dvh}.info-dialog-content{grid-template-columns:1fr;gap:13px}.info-picture{min-height:220px;padding:10px}.info-picture img{height:210px;width:80%}.info-body{align-self:auto}.info-dialog h2{font-size:39px;margin:13px 0}.info-dialog .info-description{font-size:13px;line-height:1.8}.info-close{margin:-10px -10px 0 0}.brand-dialog-inner>img{height:100px;max-height:100px}.brand-dialog-inner .info-description{text-align:left}.brand-dialog-actions{gap:12px}.contact-email{font-size:12px!important}}
 @media (max-width:390px){.brand-landing h2{font-size:40px}.brand-card-action strong{font-size:12px}.product-card .product-image{height:158px}.product-image>.image-open img{width:84%;height:85%}.product-card h3{font-size:15px}}
 [hidden]{display:none!important}
+
+
+/* ============================================================
+   Revisión comercial v20261104b — Mondo Italiano
+   ============================================================ */
+
+/* h1 en portada de marcas (sustituye al h2 anterior) */
+.brand-landing h1{font-family:'Italiana',Georgia,serif;font-weight:400;font-size:clamp(2.25rem,5vw,4rem);line-height:1.08;letter-spacing:-1.5px;margin:18px 0 14px;max-width:820px}
+.brand-landing h1 em{font-size:.97em;font-family:Georgia,serif}
+
+/* CTAs de portada */
+.brand-cta-row{display:flex;gap:16px;flex-wrap:wrap;margin:24px 0 42px}
+
+/* Franja de confianza */
+.trust-strip{display:flex;gap:0;background:var(--ink);color:var(--cream);padding:18px 6%;font-size:11px;letter-spacing:1px;flex-wrap:wrap}
+.trust-item{flex:1 1 200px;display:flex;align-items:center;gap:10px;padding:6px 12px}
+.trust-item span{color:#c7b66e;font-size:16px}
+
+/* Sección Cómo pedir — reutiliza .ovens-layout y .oven-details con fondo oscuro */
+.como-pedir-section{background:#263b2c;color:#f5f2e9}
+.como-pedir-section .ovens-layout>div>p{color:#d9dfcf;font-size:15px;line-height:1.9;max-width:450px;margin:28px 0}
+.como-pedir-section h2{font-size:clamp(55px,5.7vw,85px)}
+.como-pedir-section h2 em{color:#ded09a}
+.como-pedir-section .oven-details>div{padding:0 0 25px;margin-bottom:25px;border-bottom:1px solid #ffffff30;border-top:0}
+.como-pedir-section .oven-details>div>span{float:right;font-size:11px;color:#ded09a}
+.como-pedir-section .oven-details h3{font:25px Georgia,serif;margin-bottom:12px;color:#f5f2e9}
+.como-pedir-section .oven-details p{font-size:14px;line-height:1.8;color:#d9dfcf}
+.como-pedir-section .text-link{border-color:#ded09a;color:#ded09a}
+
+/* Bloque Valoriani compacto */
+.valoriani-compacto{background:#eaeadd}
+.valoriani-compacto-inner{display:grid;grid-template-columns:1fr 1fr;gap:8%;align-items:center;margin-top:40px}
+.valoriani-compacto-foto{display:flex;align-items:center;justify-content:center}
+.valoriani-compacto-foto img{width:100%;max-width:480px;height:auto;object-fit:contain;mix-blend-mode:multiply;filter:drop-shadow(0 20px 20px #263b2c20)}
+.valoriani-compacto-copy h2{margin:0 0 20px}
+.valoriani-compacto-copy p{font-size:14px;line-height:1.9;color:#505b49;margin-bottom:28px;max-width:420px}
+.valoriani-compacto-ctas{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+
+/* Contacto — dos CTAs */
+.contact-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px}
+
+/* Footer La Clásica */
+.footer-clasica{margin-top:10px}
+.footer-clasica a{display:flex;align-items:center;gap:10px;font-size:10px;opacity:.75;transition:opacity .25s}
+.footer-clasica a:hover{opacity:1}
+.footer-clasica img{width:60px;height:auto;object-fit:contain;mix-blend-mode:multiply}
+.footer-clasica span{font-size:9px;letter-spacing:1px;color:var(--muted)}
+
+/* prefers-reduced-motion: desactiva animaciones decorativas */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .marquee div{animation:none}
+  .reveal,.scene-pending,.product-card.motion-ready,.brand-grid>div.motion-ready,.process>div.motion-ready{opacity:1!important;transform:none!important;translate:0 0!important}
+  .animated-em,.animated-em.heading-in{transition:none!important}
+  .craft-photo img{transition:none!important}
+}
+
+/* Responsive — nuevas secciones */
+@media(max-width:1040px){
+  .valoriani-compacto-inner{gap:5%}
+  .como-pedir-section h2{font-size:clamp(48px,5.5vw,70px)}
+}
+@media(max-width:700px){
+  .brand-landing h1{font-size:clamp(2rem,8vw,2.8rem)}
+  .brand-cta-row{gap:10px}
+  .brand-cta-row .button{padding:14px 18px;font-size:11px}
+  .trust-strip{flex-direction:column;padding:15px 6%}
+  .trust-item{padding:4px 0}
+  .valoriani-compacto-inner{grid-template-columns:1fr;gap:30px}
+  .valoriani-compacto-foto img{max-width:280px}
+  .como-pedir-section .ovens-layout{grid-template-columns:1fr;gap:35px;margin-top:35px}
+  .contact-actions{flex-direction:column}
+  .contact-actions .button{width:100%;justify-content:center}
+  .footer-clasica a{gap:8px}
+}
