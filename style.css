@@ -221,6 +221,7 @@
 .valoriani-compacto{background:#eaeadd}
 .valoriani-compacto-inner{display:grid;grid-template-columns:1fr 1fr;gap:8%;align-items:center;margin-top:40px}
 .valoriani-compacto-foto{display:flex;align-items:center;justify-content:center}
+.valoriani-compacto-foto picture{display:contents}
 .valoriani-compacto-foto img{width:100%;max-width:480px;height:auto;object-fit:contain;mix-blend-mode:multiply;filter:drop-shadow(0 20px 20px #263b2c20)}
 .valoriani-compacto-copy h2{margin:0 0 20px}
 .valoriani-compacto-copy p{font-size:14px;line-height:1.9;color:#505b49;margin-bottom:28px;max-width:420px}
@@ -228,9 +229,25 @@
 
 /* Contacto — dos CTAs */
 .contact-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px;align-items:center}
-.btn-whatsapp{display:flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;background-color:var(--ink)!important;color:var(--cream)!important;font-family:'DM Sans',Arial,sans-serif!important;font-weight:500!important;font-size:15px!important;letter-spacing:0.025em!important;line-height:1.2!important;padding:16px 32px!important;border-radius:9999px!important;border:1px solid rgba(255,255,255,.08)!important;box-shadow:0 4px 14px #263b2c26!important;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,opacity .3s ease!important;text-decoration:none!important;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.btn-whatsapp:hover{transform:scale(1.02)!important;box-shadow:0 10px 24px #263b2c40!important;opacity:.96!important}
-.btn-whatsapp svg{width:20px!important;height:20px!important;flex-shrink:0!important;fill:currentColor!important}
+.btn-whatsapp{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:var(--ink);color:var(--cream);font-weight:600;font-size:14px;padding:16px 32px;border-radius:9999px;border:1px solid #ffffff14;box-shadow:0 4px 14px #263b2c26;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,opacity .3s;cursor:pointer}
+.btn-whatsapp:hover{transform:scale(1.02);box-shadow:0 10px 24px #263b2c40;opacity:.96}
+.btn-whatsapp svg{width:20px;height:20px;flex:none;fill:currentColor}
+
+/* Hero collage (≥1024px) & Cascada de marcas */
+.hero-collage{display:none}
+@keyframes hero-enter{from{opacity:0;transform:translateY(16px)}}
+@keyframes hero-float{from{transform:translateY(-6px)}to{transform:translateY(6px)}}
+@keyframes brand-enter{from{opacity:0;transform:translateY(12px)}}
+.brand-grid>.brand-card{animation:brand-enter .5s cubic-bezier(.2,.7,.2,1) calc(var(--brand-i,0)*60ms) both}
+@media(min-width:1024px){
+  .brand-hero-row{display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:center;margin-bottom:30px}
+  .hero-collage{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;pointer-events:none;user-select:none}
+  .hero-card{margin-top:var(--y,0);animation:hero-enter .6s cubic-bezier(.2,.7,.2,1) calc(var(--i,0)*90ms) both}
+  .hero-card-inner{will-change:transform;animation:hero-float 7s ease-in-out calc(var(--i,0)*-1.8s) alternate infinite}
+  .hero-collage.is-paused .hero-card-inner{animation-play-state:paused}
+  .hero-card .product-image{height:140px;border-color:#dfe1d4}
+  .hero-card h3{font-size:14px}
+}
 
 /* Footer La Clásica */
 .footer-clasica{margin-top:10px;display:flex;align-items:center;gap:12px}
@@ -244,6 +261,7 @@
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .marquee div{animation:none}
   .reveal,.scene-pending,.product-card.motion-ready,.brand-grid>div.motion-ready,.process>div.motion-ready{opacity:1!important;transform:none!important;translate:0 0!important}
+  .hero-card,.hero-card-inner,.brand-grid>.brand-card{animation:none!important;opacity:1!important;transform:none!important;will-change:auto!important}
   .animated-em,.animated-em.heading-in{transition:none!important}
   .craft-photo img{transition:none!important}
 }

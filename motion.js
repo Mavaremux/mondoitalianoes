@@ -21,7 +21,7 @@
 
   function enroll(root) {
     root.querySelectorAll(
-      '.product-card:not(.motion-ready),.brand-grid>div:not(.motion-ready),.process>div:not(.motion-ready)'
+      '#grid .product-card:not(.motion-ready),.process>div:not(.motion-ready)'
     ).forEach((el, i) => {
       el.classList.add('motion-ready');
       el.style.setProperty('--delay', `${i % 4 * 100}ms`);
@@ -32,6 +32,16 @@
   const grid = document.querySelector('#grid');
   if (grid) {
     new MutationObserver(() => enroll(grid)).observe(grid, { childList: true });
+  }
+
+  // Pausar la flotación del collage cuando el hero no está visible
+  const heroSection = document.querySelector('#inicio');
+  const collage = document.querySelector('.hero-collage');
+  if (heroSection && collage) {
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      collage.classList.toggle('is-paused', !entry.isIntersecting);
+    }, { threshold: 0 });
+    heroObserver.observe(heroSection);
   }
 
   // Subrayado animado en títulos em (h1 y h2)
