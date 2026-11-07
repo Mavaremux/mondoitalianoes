@@ -1,0 +1,27 @@
+MONDO ITALIANO — REVISIÓN DEL CLIENTE / 03 NOV 2026
+
+INSTRUCCIONES
+Extrae el ZIP completo. Abre index.html para ver la web. Para publicar, sube todos los archivos manteniendo la carpeta assets y los ficheros HTML, CSS y JavaScript en la misma estructura.
+
+CAMBIOS INCORPORADOS
+- Portada organizada por marcas: Le 5 Stagioni, Latteria Sorrentina, Rodolfi, Solania, Dante, Valoriani, Gi Metal y Cajas fermentadoras.
+- Americo Coppini sustituido en el mosaico de marcas por Cajas fermentadoras, con fotografía y medidas 60 × 40 cm y 30 × 40 cm.
+- Descripciones completas al pulsar cada producto y reseñas de marcas al pulsar sus tarjetas.
+- Acceso directo al sitio oficial https://valoriani.it/ desde la tarjeta de Valoriani y desde la ficha de horno.
+- Categorías: Harinas, Lácteos, Salsas, Tomates, Aceites, Accesorios, Hornos y Cajas fermentadoras.
+- Catálogo ampliado a 28 fichas, con nuevas fotografías de producto del catálogo y material facilitado.
+- Corregida la asignación de fotografías/descripciones de la salsa con albahaca y la pulpa fina de tomate.
+- Texto «Quiénes somos» y lema «Una porción de Italia en El Salvador».
+- Teléfono WhatsApp +503 7735-7081 y correo pizzerialaclasica@gmail.com, de acuerdo con el material de revisión.
+- Actualizado el PDF del catálogo, reemplazando el anterior que contenía elementos de La Clásica.
+- Se preservan el horno animado, el título que alterna pizzería/restaurante, la lista de selección, la consulta por WhatsApp y las animaciones.
+- Los productos no muestran precios ni stock no comprobados. Las medidas, descripciones y presentaciones corresponden a las indicaciones recibidas.
+
+NOTA SOBRE MATERIAL VISUAL
+Algunas imágenes aportadas dentro de capturas de WhatsApp tienen una resolución limitada. La fotografía de Mora y la de Provola Affumicata se extrajeron de dichas capturas por no figurar como recursos independientes en el catálogo original.
+
+PUBLICACIÓN Y SEO
+- Sustituye todos los archivos publicados y recarga el navegador sin caché (Ctrl+F5).
+- Añade dominio y dirección reales una vez confirmados para canonical, sitemap y marcado LocalBusiness. No se inventó esta información.
+- El sitio es estático: la selección se guarda en el navegador y la consulta se envía por WhatsApp. No procesa pagos ni confirma pedidos.
+- Antes de publicar, confirma con el negocio los textos comerciales y el correo proporcionados en las capturas.
